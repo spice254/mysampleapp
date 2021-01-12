@@ -1,10 +1,6 @@
+{% extends 'base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html>
-    <link href="{% static 'css/stylesheet.css' %}" rel="stylesheet">
-<head>
-	<title>{{title}}</title>
-</head>
+{% block content %}
 <body>
 	<form method='POST' action=''>{% csrf_token %}
 		{{form}}
@@ -12,4 +8,4 @@
     </form>
 
 </body>
-</html>
+{% endblock %}

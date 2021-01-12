@@ -1,14 +1,9 @@
+{% extends 'base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html>
-    <link href="{% static 'css/stylesheet.css' %}" rel="stylesheet">
-    
-<head>
-    <title>{{title}}</title>
-</head>
+{% block content %}
 <body>
     {% for instance in queryset %}
     {{instance.item_name}}, {{instance.quantity}}<br>
     {% endfor %}
 </body>
-</html>
+{% endblock %}
