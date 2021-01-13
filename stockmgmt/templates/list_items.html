@@ -1,6 +1,12 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+{% load crispy_forms_tags %}
+<form method='POST' action=''>{% csrf_token %}
+      {{form|crispy}}
+      <input type="submit" value='Search'/>
+</form>
+<br>
 <body>
   <div class="display_table">
     <table class='table'>
