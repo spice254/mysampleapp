@@ -1,4 +1,5 @@
 {% load static %}
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -64,7 +65,7 @@
 
 <main role="main" class="container">
   <div class="jumbotron">
-    <h1>{{title}}</h1>
+    <div class="header">{{header}}</div>
     {% block content %}
     <p class="lead">This example is a quick exercise to illustrate how fixed to top navbar works. As you scroll, it will remain fixed to the top of your browser’s viewport.</p>
     <a class="btn btn-lg btn-primary" href="/docs/4.4/components/navbar/" role="button">View navbar docs &raquo;</a>

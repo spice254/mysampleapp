@@ -11,10 +11,10 @@ def home(request):
 	return render(request, "home.html",context)
 
 def list_items(request):
-	title = 'List of list_items'
+	header = 'List of list_items'
 	queryset = Stock.objects.all()
 	context = {
-	"title": title,
+	"header": header,
 	"queryset": queryset,
 	}
 	return render(request, "list_items.html",context)
@@ -26,6 +26,6 @@ def add_items(request):
 		return redirect('/list_items')
 	context = {
 		"form": form,
-		"title": "Add Item",
+		"header": "Add Item",
 	}
 	return render(request, "add_items.html", context)
