@@ -93,15 +93,27 @@ def issue_items(request, pk):
 	form = IssueForm(request.POST or None, instance=queryset)
 	if form.is_valid():
 		instance = form.save(commit=False)
+		# instance.receive_quantity = 0
 		instance.quantity -= instance.issue_quantity
 		messages.success(request, "Issued SUCCESSFULLY. " + str(instance.quantity) + " " + str(instance.item_name) + "s now left in Store")
 		instance.save()
+		issue_history = StockHistory(
+			id = instance.id, 
+			last_updated = instance.last_updated,
+			category_id = instance.category_id,
+			item_name = instance.item_name, 
+			quantity = instance.quantity, 
+			issue_to = instance.issue_to, 
+			issue_by = instance.issue_by, 
+			issue_quantity = instance.issue_quantity, 
+			)
+		issue_history.save()
 
 		return redirect('/stock_detail/'+str(instance.id))
 		# return HttpResponseRedirect(instance.get_absolute_url())
 
 	context = {
-		"title": 'Issue ' + str(queryset.item_name),
+		"header": 'Issue ' + str(queryset.item_name),
 		"queryset": queryset,
 		"form": form,
 		"username": 'Issue By: ' + str(request.user),
@@ -115,14 +127,25 @@ def receive_items(request, pk):
 	form = ReceiveForm(request.POST or None, instance=queryset)
 	if form.is_valid():
 		instance = form.save(commit=False)
+		# instance.issue_quantity = 0
 		instance.quantity += instance.receive_quantity
 		instance.save()
+		receive_history = StockHistory(
+			id = instance.id, 
+			last_updated = instance.last_updated,
+			category_id = instance.category_id,
+			item_name = instance.item_name, 
+			quantity = instance.quantity, 
+			receive_quantity = instance.receive_quantity, 
+			receive_by = instance.receive_by
+			)
+		receive_history.save()
 		messages.success(request, "Received SUCCESSFULLY. " + str(instance.quantity) + " " + str(instance.item_name)+"s now in Store")
 
 		return redirect('/stock_detail/'+str(instance.id))
 		# return HttpResponseRedirect(instance.get_absolute_url())
 	context = {
-			"title": 'Reaceive ' + str(queryset.item_name),
+			"header": 'Reaceive ' + str(queryset.item_name),
 			"instance": queryset,
 			"form": form,
 			"username": 'Receive By: ' + str(request.user),
@@ -143,3 +166,13 @@ def reorder_level(request, pk):
 			"form": form,
 		}
 	return render(request, "add_items.html", context)
+
+@login_required
+def list_history(request):
+	header = 'LIST OF ITEMS'
+	queryset = StockHistory.objects.all()
+	context = {
+		"header": header,
+		"queryset": queryset,
+	}
+	return render(request, "list_history.html",context)
