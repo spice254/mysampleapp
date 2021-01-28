@@ -7,14 +7,22 @@ from .forms import *
 from django.contrib.auth.decorators import login_required
 # Create your views here.
 
+# def home(request):
+# 	header = 'Welcome: This is the Home Page'
+# 	title = 'Welcome: This is the Home Page'
+# 	context = {
+# 	"title": title,
+# 	"header": header,
+# 	}
+# 	return render(request, "home.html",context)
 def home(request):
-	header = 'Welcome: This is the Home Page'
 	title = 'Welcome: This is the Home Page'
+	form = 'Welcome: This is the Home Page'
 	context = {
-	"title": title,
-	"header": header,
+		"title": title,
+		"test": form,
 	}
-	return render(request, "home.html",context)
+	return redirect('/list_items')
 @login_required
 def list_items(request):
 	header = 'List of list_items'

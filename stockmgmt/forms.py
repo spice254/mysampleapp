@@ -52,3 +52,10 @@ class ReorderLevelForm(forms.ModelForm):
 	class Meta:
 		model = Stock
 		fields = ['reorder_level']
+
+
+class StockSearchForm(forms.ModelForm):
+	export_to_CSV = forms.BooleanField(required=False)
+	class Meta:
+		model = Stock
+		fields = ['category', 'item_name']
