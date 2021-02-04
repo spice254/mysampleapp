@@ -2,15 +2,14 @@
 {% load static %}
 {% block content %}
 {% load crispy_forms_tags %}
+
 <body>
-  <div class="row"><!--Start of row-->
-    <div class="col-sm-2"><!--Start of first col-->
+  <div class=" row "><!--Start of row-->
+    <div class="col-sm-2 "><!--Start of first col-->
       <form method='POST' action=''>{% csrf_token %}
         {{form|crispy}}
-        <input class="btn btn-primary mybutton" type="submit" value='Search'/>
+        <input class=" btn btn-primary mybutton " type="submit" value='Search'/>
       </form><br><br>
-      <br>
-      <br>
   </div><!--End of first col-->
 
   <div class="col-sm-10 "><!--Start of second col-->

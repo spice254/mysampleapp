@@ -201,6 +201,7 @@ def list_history(request):
 		if (category != ''):
 			queryset = queryset.filter(category_id=category)
 		if form['export_to_CSV'].value() == True:
+			output = []
 			response = HttpResponse(content_type='text/csv')
 			response['Content-Disposition'] = 'attachment; filename="Stock History.csv"'
 			writer = csv.writer(response)
@@ -215,7 +216,7 @@ def list_history(request):
 				'LAST UPDATED'])
 			instance = queryset
 			for stock in instance:
-				writer.writerow(
+				output.append(
 				[stock.category, 
 				stock.item_name, 
 				stock.quantity, 
@@ -224,6 +225,7 @@ def list_history(request):
 				stock.receive_by, 
 				stock.issue_by, 
 				stock.last_updated])
+			writer.writerow(output)
 			return response
 		context = {
 		"form": form,
